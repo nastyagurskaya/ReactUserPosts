@@ -14,7 +14,7 @@ class  App extends Component {
     posts: []
   };
   componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/posts")
+    axios.get("https://jsonplaceholder.typicode.com/posts ")
       .then(response => {
 
         // create an array of contacts only with relevant data
