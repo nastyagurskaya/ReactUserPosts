@@ -5,39 +5,32 @@ import Posts from './components/Posts/Posts';
 import Registration from './components/Registration/Registration';
 import Sidebar from './components/Sidebar/Sidebar';
 import './App.css';
-import {axios, map} from "axios";
+import { axios } from "axios";
 import { Router, browserHistory, Route, IndexRoute, withRouter, IndexRedirect } from 'react-router';
 import NotFoundPage from './components/NotFoundPage';
 
 class  App extends Component {
-  state = {
-    posts: []
-  };
-  componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/posts ")
-      .then(response => {
-
-        // create an array of contacts only with relevant data
-        const newPosts = response.data.map(c => {
-          return {
-            id: c.id,
-            title: c.title,
-            body: c.body
-          };
-        });
-
-        // create a new "State" object without mutating 
-        // the original State object. 
-        const newState = Object.assign({}, this.state, {
-          contacts: newPosts
-        });
-
-        // store the new state object in the component's state
-        this.setState(newState);
-      })
-      .catch(error => console.log(error));
+  constructor(props){
+    super(props);
+    this.state = {
+      posts: []
+    };
   }
-
+  componentDidMount() {
+    // fetch('https://jsonplaceholder.typicode.com/posts')
+    // .then(data => {
+    //   return data.json();
+    //   alert(data);
+    // })
+    fetch('https://jsonplaceholder.typicode.com/posts').
+  then(response => response.json()).then((posts) => {
+      console.log(posts);
+      console.log(posts.length);
+      this.setState({
+        posts: posts
+      });
+    });
+}
   render() {
     return (
       <div className="App">
@@ -49,7 +42,7 @@ class  App extends Component {
            
       </Router> */}
        <Sidebar/>
-       <Posts posts={this.state.posts} />
+       {/* <Posts posts={this.state.posts} /> */}
       </div>
     );
   }
