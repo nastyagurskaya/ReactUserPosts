@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Details from './components/Details/Details';
 import Login from './components/Login/Login';
-import PostsList from './components/Posts/PostsList';
+import PostsComponent from './components/Posts/PostsComponent';
+import EditPost from './components/Posts//EditPost';
 import Registration from './components/Registration/Registration';
 import Sidebar from './components/Sidebar/Sidebar';
 import './App.css';
@@ -50,10 +51,10 @@ class  App extends Component {
         <Sidebar/>
       </div>
         <div style = {bodyDivStyle}>
-        <Route path="/details" component={Details}/>
+        <Route exact path="/details" component={Details}/>
       <Route path="/login" component={Login}/>
       <Route path="/registration" component={Registration}/>
-      <Route path="/postslist" component={PostsList}/>
+      <Route path="/postslist" component={PostsComponent}/>
       </div>
       </SplitPane>
     );

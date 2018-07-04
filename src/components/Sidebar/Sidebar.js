@@ -21,7 +21,7 @@ class  Sidebar extends Component {
   constructor(props){
       super(props);
       this.state = {
-        active
+        active: null
       };
     }
 
@@ -35,7 +35,7 @@ class  Sidebar extends Component {
   
   myColor(position) {
     if (this.state.active === position) {
-      return "blue";
+      return "#00A8FF";
     }
     return "";
   }
@@ -44,23 +44,23 @@ class  Sidebar extends Component {
   <div className="Sidebar">
    <div  style={divStyle} >
        <ul>  
-         <li style={{background: this.myColor(1)}} onClick={() => {this.toggle(1)}}>
+         <li style={{background: this.myColor(0)}} onClick={() => {this.toggle(0)}}>
          <Link to="/details"><span style = {iconStyle}><SupervisorAccount  /></span></Link>
       
          </li>
-       <li>
+       <li style={{background: this.myColor(1)}} onClick={() => {this.toggle(1)}}>
        <Link to="/login"><span style = {iconStyle}><Face /></span></Link>
 
        </li>
-       <li>
+       <li style={{background: this.myColor(2)}} onClick={() => {this.toggle(2)}}>
        <Link to="/registration"><span style = {iconStyle}><PersonAdd/></span></Link>
      
        </li>
-       <li>
-       <Link to="/postslist"><span style = {iconStyle}><Message /></span></Link>
+       <li style={{background: this.myColor(3)}} onClick={() => {this.toggle(3)}}>
+       <Link to="/postslist/dashboard"><span style = {iconStyle}><Message /></span></Link>
 
        </li>
-       <li>
+       <li style={{background: this.myColor(4)}} onClick={() => {this.toggle(4)}}>
        <span style = {iconStyle}><Clear/></span>
        </li>
      </ul>

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import Post from './Post'
 import PropTypes from "prop-types";
 
-
 function Posts(props) {
     return (
-      <div>{props.posts.map(c => <Post key={c.id} title={c.title} body={c.body} />)}</div>
+      <div>{props.posts.map(c => <Post key={c.id} id={c.id} title={c.title} body={c.body} func = {props.func} comp = {props.comp}/>)}
+      </div>
     );
   }
   
