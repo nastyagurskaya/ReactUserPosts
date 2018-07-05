@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function Posts(props) {
     return (
-      <div>{props.posts.map(c => <Post key={c.id} id={c.id} title={c.title} body={c.body} func = {props.func} comp = {props.comp}/>)}
+      <div>{props.posts.map(c => <Post key={c.id} id={c.id} title={c.title} body={c.body} comp = {props.comp}/>)}
       </div>
     );
   }

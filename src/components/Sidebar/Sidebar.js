@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Registration from '../Registration/Registration';
 import { Face, SupervisorAccount, PersonAdd, Message, Clear} from '@material-ui/icons';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
+import {fakeAuth} from '/Internship/React/user-posts-client/src/App';
 const iconStyle = {
     color: '#fff',
     padding: '20px',

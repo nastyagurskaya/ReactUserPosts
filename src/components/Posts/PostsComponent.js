@@ -23,7 +23,7 @@ class PostsComponent extends Component {
       <Route exact path="/postslist/dashboard" component={PostsList}/>
       
       <Route path="/postslist/create" component={CreatePost}/>
-      <Route path="/postslist/:id" component={EditPost}/>
+      <Route path="/postslist/edit/:id" component={EditPost}/>
       </div>
     );
   }

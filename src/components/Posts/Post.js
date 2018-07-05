@@ -22,7 +22,7 @@ function Post(props) {
       <strong><span style ={titleStyle} >{props.title} {props.id}</span></strong><br/>
       <span style={bodyStyle}>{props.body}</span> <br/>
       <span onClick = {() => { if (window.confirm('Are you sure you wish to delete this item?')) deleteItem(props.id, props.key, props.comp)}}><Delete /></span>
-      <span><Link to="/postslist/create"><Edit /></Link></span>
+      <span><Link to={'edit/'+ props.id }><Edit /></Link></span>
     </div>
   );
 }
