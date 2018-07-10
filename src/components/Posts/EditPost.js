@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import Post from '../Posts/Post';
+import Post from './post';
+import { render } from 'react-dom'
 import { Add } from '@material-ui/icons';
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Route, Redirect } from 'react-router-dom';
+import { SketchPicker } from 'react-color';
+import { userPostService } from '../services/user.posts.service';
+ 
 
 const titleStyle={
     padding: '10px',
@@ -16,18 +21,28 @@ class EditPost extends Component {
     this.state = {
       id: this.props.match.params.id,
       title: "default",
-      body: "default"
+      body: "default",
+      color: "#fff",
+      redirect: false
     };
   }
 componentDidMount() {
-  fetch('https://jsonplaceholder.typicode.com/posts/'+this.state.id).
-then(response => response.json()).then((post) => {
+  userPostService.getPostbyId(this.state.id).then((post) => {
     this.setState({
       id: post.id,
       title: post.title,
-      body: post.body
+      body: post.body,
+      color: post.color
     });
   });
+}
+renderRedirect = () => {
+  if (this.state.redirect) {
+    return <Redirect to='/postslist/dashboard'/>
+  }
+}
+handleColorChange = (color) => {
+  this.setState({ color: color.hex });
 }
 setTitle(event) {
   this.setState({title: event.target.value})
@@ -36,24 +51,16 @@ setBody(event) {
   this.setState({body: event.target.value})
 }
 updatePost = () => {
-  fetch('https://jsonplaceholder.typicode.com/posts/'+this.state.id, {
-    method: 'PUT',
-    body: JSON.stringify({
-      id: this.state.id,
-      title: this.state.title,
-      body: this.state.body,
-      userId: 1
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-  .then(response => response.json())
-  .then(json => console.log(json))
+  userPostService.updatePost(this.state.id, this.state.title, this.state.body, this.state.color).then(response => console.log(response))
+  this.setState(
+    {  redirect: true  }
+  )
 }
 render() {
+  if(this.state.color===null) this.state.color = "#fff";
     return (
       <div className="EditPost">
+       {this.renderRedirect()}
       <h3><strong>{ this.state.title } Details</strong></h3>
            <Form>
         <FormGroup row>
@@ -66,6 +73,12 @@ render() {
           <Label for="body" sm={2}>Body</Label>
           <Col sm={10}>
             <Input type="textarea" name="body" id="body" value={this.state.body} onChange={this.setBody.bind(this)}/>
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="color" sm={2}>Color</Label>
+          <Col sm={10}>
+          <SketchPicker color={ this.state.color} onChangeComplete={ this.handleColorChange } />
           </Col>
         </FormGroup>
       </Form>

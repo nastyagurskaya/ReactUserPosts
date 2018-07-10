@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PostsList from './PostsList';
-import EditPost from './EditPost';
-import CreatePost from './CreatePost';
-import { axios } from "axios";
+import PostsList from './postsList';
+import EditPost from './editPost';
+import CreatePost from './createPost';
 import { Route, Redirect } from 'react-router-dom';
 import SplitPane from 'react-split-pane';
 

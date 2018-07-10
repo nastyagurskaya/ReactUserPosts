@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 class Registration extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="Registration">
        <h3><strong>Please enter your information</strong></h3>
        <Form>
        <FormGroup>

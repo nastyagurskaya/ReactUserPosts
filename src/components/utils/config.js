@@ -1,0 +1,4 @@
+export const config = {
+    apiUrl: 'http://localhost:6200/api',
+    auth_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYXN0IiwianRpIjoiY2QxNDcxMGUtZTczMS00YjRkLTg2NDItYzc3MmUyYmVlOWRiIiwiaWF0IjoxNTMxMjQwOTYyLCJyb2wiOiJhcGlfYWNjZXNzIiwiaWQiOiI4NGUzYTM0MC05MTZhLTRmM2MtODIxMi1jYWIzNDIyZTQwZmEiLCJuYmYiOjE1MzEyNDA5NjIsImV4cCI6MTUzMTI0ODE2MiwiaXNzIjoid2ViQXBpIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo2MjAwLyJ9.NY75UVUCjG1qzB_xr-MxzJeBampgyUvP-wbW1I6dJFc'
+};
