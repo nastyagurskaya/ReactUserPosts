@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import Posts from './posts';
-import { Add } from '@material-ui/icons';
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {browserHistory} from 'react-router';
-import { Route, Redirect } from 'react-router-dom';
-import { authHeader } from '../utils/auth-header';
+import {Redirect } from 'react-router-dom';
 import { config } from '../utils/config';
 import { SketchPicker } from 'react-color';
 import { userPostService } from '../services/user.posts.service';

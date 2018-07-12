@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import Post from './post';
-import { render } from 'react-dom'
-import { Add } from '@material-ui/icons';
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Route, Redirect } from 'react-router-dom';
+import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import { SketchPicker } from 'react-color';
 import { userPostService } from '../services/user.posts.service';
  
-
-const titleStyle={
-    padding: '10px',
-    fontFamily: 'Montserrat',
-    fontSize: '1.5em',
-    fontWeight: 'bold'
-}
 
 class EditPost extends Component {
   constructor(props){

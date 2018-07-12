@@ -5,6 +5,7 @@ import { Link ,Route } from 'react-router-dom';
 import EditPost from './editPost';
 import { userPostService } from '../services/user.posts.service';
 import { Label, Input, Col, FormGroup } from 'reactstrap';
+import CheckPosts from '../posts/checkposts';
 
 const titleStyle={
     padding: '5px',
@@ -31,7 +32,9 @@ class PostsList extends Component {
     this.state = {
       posts: [],
       postsCopy:[],
-      sharedPosts:[]
+      sharedPosts:[],
+      checkedPosts:[],
+      checkedItems:[]
     };
   }
 searchValue(event) {
@@ -52,6 +55,16 @@ searchValue(event) {
       sharedPosts: posts
     });
   }); 
+  userPostService.getCheckPosts().then((posts)=>{
+    this.setState({
+      checkedPosts: posts
+    });
+  }); 
+  userPostService.getCheckItems().then((posts)=>{
+    this.setState({
+      checkedItems: posts
+    });
+  }); 
 }
   render() {
     return (
@@ -63,10 +76,12 @@ searchValue(event) {
       <Col sm={0}>
        <Input type="text" name="value" id="searchValue" placeholder="Item name..." onChange={this.searchValue.bind(this)} /></Col>
        </FormGroup>
-      <div style = {createButtonStyle} > <Link to="/postslist/create"><span style={{verticalAlign: 'top'}}>Create</span><Add /></Link></div>
+      <div style = {createButtonStyle}> <Link to="/postslist/create"><span style={{verticalAlign: 'top'}}>Create</span><Add /></Link></div>
        <Posts posts={this.state.posts} comp = {this} />
        <div style={titleStyle}>Shared Posts With You</div>
        <Posts posts={this.state.sharedPosts} shared={true} />
+       <div style={titleStyle}>Checked Posts</div>
+       <CheckPosts checkposts={this.state.checkedPosts} checkitems={this.state.checkedItems} comp = {this} />
       </div>
     );
   }

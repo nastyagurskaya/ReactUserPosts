@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { userPostService } from '../services/user.posts.service';
 class Details extends Component {
   constructor(props){
     super(props);
@@ -12,9 +12,9 @@ class Details extends Component {
     };
   }
 componentDidMount() {
-  fetch('https://jsonplaceholder.typicode.com/users/'+this.state.id).
-then(response => response.json()).then((user) => {
+ userPostService.getUserDetails().then(response => response.json()).then((user) => {
     this.setState({
+      id: user.id,
       phone: user.phone,
       name: user.name,
       email: user.email,
