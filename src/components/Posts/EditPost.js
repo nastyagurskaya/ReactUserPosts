@@ -41,10 +41,11 @@ setBody(event) {
   this.setState({body: event.target.value})
 }
 updatePost = () => {
-  userPostService.updatePost(this.state.id, this.state.title, this.state.body, this.state.color).then(response => console.log(response))
-  this.setState(
-    {  redirect: true  }
-  )
+  userPostService.updatePost(this.state.id, this.state.title, this.state.body, this.state.color).then(response =>{
+    if (response.ok == true) this.setState(
+      {  redirect: true  }
+    )
+  })
 }
 render() {
   if(this.state.color===null) this.state.color = "#fff";

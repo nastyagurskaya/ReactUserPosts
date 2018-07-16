@@ -5,7 +5,7 @@ import PostsList from "./postsList";
 import { Link } from "react-router-dom";
 import { userPostService } from '../services/user.posts.service';
 
-import ConfirmationDialog from '../material-dialog/share.dialog';
+import ShareDialog from '../material-dialog/share.dialog';
 
 const titleStyle={
   fontSize: '1.4em'
@@ -72,11 +72,12 @@ export default class  Post extends Component {
       <span onClick={this.handleClickListItem}><Share/></span></div> :
       <div style = {divStyle}>  <span style={bodyStyle}>Shared by {this.state.user.name}</span></div>
       }
-      <ConfirmationDialog
+      <ShareDialog
             open={this.state.open}
             onClose={this.handleClose}
             iduser={this.state.user.id}
             postid={this.state.id}
+            posttitle={this.state.title}
           />
     </div>
     );

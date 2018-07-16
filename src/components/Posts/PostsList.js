@@ -6,6 +6,7 @@ import EditPost from './editPost';
 import { userPostService } from '../services/user.posts.service';
 import { Label, Input, Col, FormGroup } from 'reactstrap';
 import CheckPosts from '../posts/checkposts';
+import CheckPostnDialog from '../material-dialog/create.checkpost.dialog';
 
 const titleStyle={
     padding: '5px',
@@ -18,7 +19,8 @@ const createButtonStyle={
     fontFamily: 'Montserrat',
     fontSize: '1.2em',
     fontWeight: 'bold',
-    textAlign: 'right'
+    textAlign: 'right',
+    color: '#227FEF'
 }
 const searchStyle={
   padding:'10px',
@@ -34,9 +36,16 @@ class PostsList extends Component {
       postsCopy:[],
       sharedPosts:[],
       checkedPosts:[],
-      checkedItems:[]
+      checkedItems:[],
+      openCreate: false
     };
   }
+handleClickOpen = () => {
+  this.setState({ openCreate: true });
+};
+handleClose = () => {
+  this.setState({ openCreate: false });
+};
 searchValue(event) {
     let value = event.target.value;
     let posts = Object.assign([], this.state.postsCopy).filter(
@@ -81,7 +90,12 @@ searchValue(event) {
        <div style={titleStyle}>Shared Posts With You</div>
        <Posts posts={this.state.sharedPosts} shared={true} />
        <div style={titleStyle}>Checked Posts</div>
+       <div style = {createButtonStyle}> <a onClick={this.handleClickOpen}><span style={{verticalAlign: 'top'}}>Create</span><Add /></a></div>
        <CheckPosts checkposts={this.state.checkedPosts} checkitems={this.state.checkedItems} comp = {this} />
+       <CheckPostnDialog
+            open={this.state.openCreate}
+            onClose={this.handleClose}
+          />
       </div>
     );
   }

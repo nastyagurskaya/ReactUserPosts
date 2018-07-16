@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Post from './post'
 import PropTypes from "prop-types";
-import { Delete } from '@material-ui/icons';
+import { Link ,Route } from 'react-router-dom';
+import { Delete, Edit } from '@material-ui/icons';
 import {userPostService} from '../services/user.posts.service';
 
 function deleteItem(id, comp)
@@ -9,8 +10,7 @@ function deleteItem(id, comp)
   userPostService.deleteChekedPost(id).then(response => console.log(response));
   let chposts = comp.state.checkedPosts;
   chposts = Object.assign([], comp.state.checkedPosts).filter(
-  item => item.id !== id);
-  console.log(chposts);  
+  item => item.id !== id);  
   comp.setState({checkedPosts: chposts});
 }
 
@@ -35,7 +35,9 @@ function CheckPosts(props) {
     
   };
 export default CheckPosts;
- 
+const linkStyle={
+  color: '#2D2E2E'
+}
 class CheckPost extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +46,7 @@ class CheckPost extends Component {
           title: props.title,
           color: props.color,
           comp: props.comp,
-          checkitems: props.checkitems
+          checkitems: props.checkitems,
         }
     }
         render(){
@@ -69,6 +71,7 @@ class CheckPost extends Component {
                 }
                 </span>
                 <div style = {{textAlign: 'right'}}>
+                <span><Link style = {linkStyle} to={'editcheckpost/'+ this.state.id }><Edit /></Link></span>
                 <span onClick = {() => { if (window.confirm('Are you sure you wish to delete this item?')) deleteItem(this.state.id, this.state.comp)}}><Delete /></span>
                 </div>
                 </div>

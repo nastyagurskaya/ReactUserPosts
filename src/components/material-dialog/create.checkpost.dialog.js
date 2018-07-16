@@ -4,21 +4,21 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
+import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {userPostService} from '../services/user.posts.service';
+import { SketchPicker } from 'react-color';
+import {  Col,  Label } from 'reactstrap';
+import {Redirect } from 'react-router-dom';
 
-export default class ShareDialog extends React.Component {
+export default class CheckPostnDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        value: '',
-        id: 0,
-        postId: props.postid,
-        options: [],
-        idUser: props.iduser,
-        posttitle: props.posttitle
+       title: '',
+       color: '#fff',
+       redirect: false,
+       id: 0
     }
   }
   componentDidMount() {
@@ -38,25 +38,26 @@ export default class ShareDialog extends React.Component {
 
   radioGroup = null;
 
-  handleEntering = () => {
-    this.radioGroup.focus();
-  };
-
   handleCancel = () => {
     this.props.onClose();
   };
-
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to={'/postslist/editcheckpost/'+this.state.id}/>
+    }
+  }
   handleOk = () => {
-    userPostService.sharePost(this.state.id, this.state.postId).then(response => console.log(response));
+    userPostService.createCheckPost(this.state.title,this.state.color).then(response => {
+        //console.log(response)
+        this.setState({ id: response, redirect: true })
+    });
     this.props.onClose();
   };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-    let user = this.state.options.find(function(element) {
-        return element.username === value;
-      });
-      this.setState({ id:user.id });
+  handleColorChange = (color) => {
+    this.setState({ color: color.hex });
+  }
+  handleChange = (event) => {
+    this.setState({ title:  event.target.value });
   };
 
   render() {
@@ -64,25 +65,29 @@ export default class ShareDialog extends React.Component {
     
     return (
       <Dialog
-        disableBackdropClick
+         disableBackdropClick
         disableEscapeKeyDown
-        maxWidth="xs"
-        onEntering={this.handleEntering}
+        // onEntering={this.handleEntering}
+        fullWidth
         aria-labelledby="confirmation-dialog-title"
         {...other}
       >
-        <DialogTitle id="confirmation-dialog-title">Choose user whom you want to share post {this.state.posttitle}</DialogTitle>
+        {this.renderRedirect()}
+        <DialogTitle id="confirmation-dialog-title">Create new Checklist Post</DialogTitle>
         <DialogContent>
-          <RadioGroup  ref={node => {
-              this.radioGroup = node;
-            }}  aria-label="ringtone" name="ringtone"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >
-            {this.state.options.map(option => (
-              <FormControlLabel value={option.username} key={option.id} control={<Radio />} label={option.username} />
-            ))}
-          </RadioGroup>
+        <TextField
+              autoFocus
+              margin="dense"
+              id="title"
+              label="Title"
+              type="text"
+              fullWidth
+              onChange={this.handleChange}
+            />
+            <Label for="color" sm={2}>Color</Label>
+          <Col sm={10}>
+          <SketchPicker color={ this.state.color} onChangeComplete={ this.handleColorChange} />
+          </Col>
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleCancel} color="primary">

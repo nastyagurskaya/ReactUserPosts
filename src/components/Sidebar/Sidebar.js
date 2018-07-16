@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './sidebar.css';
 import { Face, SupervisorAccount, PersonAdd, Message, Clear} from '@material-ui/icons';
 import {  Link, Route, Redirect } from 'react-router-dom';
+import { userPostService } from '../services/user.posts.service';
 
 const iconStyle = {
     color: '#fff',
@@ -25,7 +26,7 @@ class Sidebar extends Component {
     if(position===5) this.logout();
   }
   logout = () => {
-    localStorage.setItem('authorized', 'false');
+    userPostService.logout();
     this.setState({active : 1})
   }
   myColor(position) {
@@ -39,7 +40,9 @@ class Sidebar extends Component {
     return (
   <div className="Sidebar">
    <div  style={divStyle} >
-       {  localStorage.getItem('authorized') != 'true' ?  
+       { localStorage.getItem('authorized') != 'true' 
+       //userPostService.loggedin() == false
+       ?  
        <ul>
          <li style={{background: this.myColor(1)}} onClick={() => {this.toggle(1)}}>
           <Link to="/login"><span style = {iconStyle}><SupervisorAccount/></span></Link>

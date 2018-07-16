@@ -3,7 +3,7 @@ import {authHeader } from '../utils/auth-header';
 
 export const userPostService = {
     login,
-   // logout,
+    logout,
     registrate,
     getPosts,
     updatePost,
@@ -17,34 +17,20 @@ export const userPostService = {
     getCheckPosts,
     getCheckItems,
     deleteChekedPost,
-    handleError
+    handleError,
+    createCheckPost,
+    getCheckPostbyId,
+    updateCheckPost,
+    createCheckItem,
+    updateCheckItem,
+    getCheckItemsbyPost,
+    deleteChekedItem
 };
-
-// function login(username, password) {
-//     const requestOptions = {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ username, password })
-//     };
-
-//     return fetch(config.apiUrl + '/auth/login', requestOptions)
-//         .then(handleResponse, handleError)
-//         .then(resp => {
-//             // login successful if there's a jwt token in the response
-//             if (resp.auth_token) {
-//                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-//                 localStorage.setItem('auth_token', JSON.stringify(resp.auth_token));
-//             }
-
-//             return user;
-//         }
-//     );
-// }
-
-// function logout() {
-//     // remove user from local storage to log user out
-//     localStorage.removeItem('user');
-// }
+var login = false;
+function logout() {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('authorized');
+}
 
 function login(username, password) {
     const requestOptions = {
@@ -59,7 +45,7 @@ function login(username, password) {
     .then(response => {
         if (response.auth_token) {
             localStorage.setItem('auth_token', JSON.stringify(response.auth_token));
-            localStorage.setItem('authorized', 'true');
+            localStorage.setItem('authorized', 'true');         
         }
     })
 }
@@ -116,6 +102,20 @@ function getPostbyId(id) {
     };
     return fetch(config.apiUrl+'/posts/'+id, requestOptions).then(response => response.json());
 }
+function getCheckPostbyId(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+    return fetch(config.apiUrl+'/checkposts/'+id, requestOptions).then(response => response.json());
+}
+function getCheckItemsbyPost(idPost) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+    return fetch(config.apiUrl+'/checkposts/checkitems/'+idPost, requestOptions).then(response => response.json());
+}
 function updatePost(id, title, body, color) {
     const requestOptions = {
         method: 'POST',
@@ -128,6 +128,28 @@ function updatePost(id, title, body, color) {
           })
     };
     return fetch(config.apiUrl+'/posts/update', requestOptions);
+}
+function updateCheckPost(id, title, color) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify({
+          id: id,
+          title: title,
+          color: color
+          })
+    };
+    return fetch(config.apiUrl+'/checkposts/update', requestOptions);
+}
+function updateCheckItem(item) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify(item)
+    };
+    return fetch(config.apiUrl+'/checkposts/checklistitem/update', requestOptions).then(res =>{
+        console.log(res);
+    });
 }
 function getUserDetails()
 {
@@ -149,6 +171,25 @@ function createPost(title, body, color) {
     };
      return fetch(config.apiUrl+'/posts/create', requestOptions);
 }
+function createCheckPost(title, color) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify({
+            title: title,
+            color: color
+          })
+    };
+     return fetch(config.apiUrl+'/checkposts/create', requestOptions).then(response => response.json());
+}
+function createCheckItem(item) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: JSON.stringify(item)
+    };
+     return fetch(config.apiUrl+'/checkposts/checklistitem/create', requestOptions).then(response => response.json());
+}
 function deletePost(id) {
     const requestOptions = {
         method: 'DELETE',
@@ -162,6 +203,13 @@ function deleteChekedPost(id) {
         headers: authHeader()
     };
     return fetch(config.apiUrl + '/checkposts/'+id , requestOptions);
+}
+function deleteChekedItem(id) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader()
+    };
+    return fetch(config.apiUrl + '/checkposts/checklistitem/'+id , requestOptions);
 }
 function sharePost(UserId, PostId) {
     const requestOptions = {
@@ -203,8 +251,4 @@ function handleError(error) {
 //             response.text().then(text => reject(text));
 //         }
 //     });
-// }
-
-// function handleError(error) {
-//     return Promise.reject(error && error.message);
 // }
