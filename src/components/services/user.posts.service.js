@@ -1,5 +1,6 @@
 import { config } from '../utils/config';
 import {authHeader } from '../utils/auth-header';
+import cookie from 'react-cookies'
 
 export const userPostService = {
     login,
@@ -28,8 +29,10 @@ export const userPostService = {
 };
 var login = false;
 function logout() {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('authorized');
+    //localStorage.removeItem('auth_token');
+    //localStorage.removeItem('authorized');
+    cookie.remove('auth_token');
+    cookie.remove('authorized');
 }
 
 function login(username, password) {
@@ -44,8 +47,10 @@ function login(username, password) {
     return fetch(config.apiUrl+'/auth/login', requestOptions).then(response => response.json(),handleError)
     .then(response => {
         if (response.auth_token) {
-            localStorage.setItem('auth_token', JSON.stringify(response.auth_token));
-            localStorage.setItem('authorized', 'true');         
+           cookie.save('auth_token', JSON.stringify(response.auth_token), { maxAge: JSON.stringify(response.expires_in) });
+           cookie.save('authorized', true, { maxAge: JSON.stringify(response.expires_in) });
+           // localStorage.setItem('auth_token', JSON.stringify(response.auth_token));
+            //localStorage.setItem('authorized', 'true');         
         }
     })
 }

@@ -5,7 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
     <BrowserRouter>

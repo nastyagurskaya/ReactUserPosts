@@ -3,6 +3,7 @@ import './sidebar.css';
 import { Face, SupervisorAccount, PersonAdd, Message, Clear} from '@material-ui/icons';
 import {  Link, Route, Redirect } from 'react-router-dom';
 import { userPostService } from '../services/user.posts.service';
+import cookie from 'react-cookies'
 
 const iconStyle = {
     color: '#fff',
@@ -40,7 +41,8 @@ class Sidebar extends Component {
     return (
   <div className="Sidebar">
    <div  style={divStyle} >
-       { localStorage.getItem('authorized') != 'true' 
+       { !cookie.load('authorized') 
+         //localStorage.getItem('authorized') != 'true' 
        //userPostService.loggedin() == false
        ?  
        <ul>
